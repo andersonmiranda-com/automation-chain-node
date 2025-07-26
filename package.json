@@ -7,7 +7,12 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "bun:dev": "bun run src/index.ts",
+    "bun:start": "bun run dist/index.js",
+    "bun:build": "bun build src/index.ts --outfile dist/bundle.js --target node",
+    "bun:bundle": "bun build src/index.ts --outfile dist/bundle.js --target node --minify",
+    "bun:start:bundle": "bun run dist/bundle.js"
   },
   "dependencies": {
     "@langchain/openai": "^0.0.14",
