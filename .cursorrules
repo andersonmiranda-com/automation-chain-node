@@ -8,7 +8,7 @@
 
 ## File Naming
 - Services: `{ServiceName}Service.ts` (OpenAIService, TelegramService)
-- Nodes: `{NodeType}{Category}.ts` (TextGenerator, TelegramPublisher)
+- Nodes: `{NodeType}Node.ts` (TextGeneratorNode, TelegramPublisherNode)
 - Core: `{ComponentName}.ts` (Pipeline, Builder, Node interface)
 
 ## Code Patterns

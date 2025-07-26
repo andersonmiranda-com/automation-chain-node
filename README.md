@@ -176,9 +176,12 @@ For private channels:
 │   │   └── Builder.ts            # Pipeline construction
 │   ├── nodes/                    # Node implementations
 │   │   ├── ai/                  # AI-related nodes
-│   │   │   └── TextGenerator.ts # LangChain text generation
+│   │   │   └── TextGeneratorNode.ts # LangChain text generation
+│   │   ├── processors/          # Processing nodes
+│   │   │   ├── SetNode.ts       # n8n-style value setting
+│   │   │   └── TextFormatterNode.ts # Text transformation
 │   │   └── publishers/          # Publishing nodes
-│   │       └── TelegramPublisher.ts # Telegram publishing
+│   │       └── TelegramPublisherNode.ts # Telegram publishing
 │   ├── services/                # External service clients
 │   │   ├── OpenAIService.ts     # OpenAI with LangChain integration
 │   │   └── TelegramService.ts   # Telegram Bot API client
@@ -190,7 +193,9 @@ For private channels:
 │   └── pipelines/              # Pipeline definitions
 │       ├── telegram_pipeline.json # LangChain LLM pipeline
 │       ├── conversational_chain.json # Conversational pipeline
-│       └── agent_chain.json    # Agent pipeline
+│       ├── agent_chain.json    # Agent pipeline
+│       ├── set_example.json    # SetNode demonstration
+│       └── formatter_example.json # TextFormatter demonstration
 ├── package.json                 # Node.js dependencies and scripts
 ├── yarn.lock                   # Yarn dependencies lock file
 ├── tsconfig.json               # TypeScript configuration

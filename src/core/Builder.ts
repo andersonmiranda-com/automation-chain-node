@@ -1,8 +1,8 @@
 import * as fs from "fs";
-import { TextGeneratorNode } from "../nodes/ai/TextGenerator";
+import { TextGeneratorNode } from "../nodes/ai/TextGeneratorNode";
 import { SetNode } from "../nodes/processors/SetNode";
-import { TextFormatterNode } from "../nodes/processors/TextFormatter";
-import { TelegramPublisherNode } from "../nodes/publishers/TelegramPublisher";
+import { TextFormatterNode } from "../nodes/processors/TextFormatterNode";
+import { TelegramPublisherNode } from "../nodes/publishers/TelegramPublisherNode";
 import { Node, NodeDefinition } from "../types";
 import { Pipeline } from "./Pipeline";
 
