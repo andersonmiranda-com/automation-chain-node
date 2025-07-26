@@ -1,0 +1,29 @@
+{
+  "name": "telegram_pipeline",
+  "description": "Generates and publishes motivational texts to Telegram",
+  "schedule": "0 9 * * *",
+  "nodes": [
+    {
+      "id": "text_generator_llm",
+      "type": "text_generator",
+      "name": "Generate Motivational Text with LLM Chain",
+      "credentials": "default",
+      "config": {
+        "chain_type": "llm",
+        "prompt_template": "Generate a short and powerful motivational text in Spanish about {topic}. The text should be inspiring, positive, and motivate people to achieve their goals. It should be between 100-150 words and appropriate for sharing on social media.",
+        "model": "gpt-3.5-turbo",
+        "max_tokens": 300,
+        "temperature": 0.8
+      }
+    },
+    {
+      "id": "telegram_publisher",
+      "type": "telegram_publisher",
+      "name": "Publish to Telegram",
+      "credentials": "motivational_bot",
+      "config": {
+        "message_template": "💪 <b>Daily Motivational Message</b>\n\n{generated_text}\n\n<i>✨ Have an amazing day!</i>"
+      }
+    }
+  ]
+} 

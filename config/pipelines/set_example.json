@@ -1,0 +1,46 @@
+{
+  "name": "set_node_example_pipeline",
+  "description": "Pipeline que demuestra el uso del nodo Set estilo n8n",
+  "schedule": "0 9 * * *",
+  "nodes": [
+    {
+      "id": "text_generator",
+      "type": "text_generator",
+      "name": "Generate Text",
+      "credentials": "default",
+      "config": {
+        "chain_type": "llm",
+        "prompt_template": "Genera una frase corta sobre {topic}",
+        "model": "gpt-3.5-turbo",
+        "temperature": 0.8
+      }
+    },
+    {
+      "id": "set_values",
+      "type": "set",
+      "name": "Set Values (n8n style)",
+      "config": {
+        "values": {
+          "timestamp": "{{ $now.toISOString() }}",
+          "pipeline_name": "Set Node Example",
+          "uppercase_text": "{{ $input.generated_text.toUpperCase() }}",
+          "slug_text": "{{ $input.generated_text.toLowerCase().replace(/[^a-z0-9\\s-]/g, '').replace(/\\s+/g, '-').replace(/-+/g, '-').trim() }}",
+          "formatted_text": "{{ $input.generated_text.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ') }}",
+          "word_count": "{{ $input.generated_text.split(' ').length }}",
+          "char_count": "{{ $input.generated_text.length }}",
+          "original_text": "{{ $input.generated_text }}",
+          "summary": "{{ `Texto: ${$input.generated_text}\nPalabras: ${$input.generated_text.split(' ').length}\nCaracteres: ${$input.generated_text.length}\nSlug: ${$input.generated_text.toLowerCase().replace(/[^a-z0-9\\s-]/g, '').replace(/\\s+/g, '-').replace(/-+/g, '-').trim()}` }}"
+        }
+      }
+    },
+    {
+      "id": "telegram_publisher",
+      "type": "telegram_publisher",
+      "name": "Publish to Telegram",
+      "credentials": "motivational_bot",
+      "config": {
+        "message_template": "🔧 <b>Set Node Demo</b>\n\n{summary}\n\n⏰ {timestamp}"
+      }
+    }
+  ]
+} 

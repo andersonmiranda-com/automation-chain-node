@@ -1,0 +1,36 @@
+{
+  "name": "formatter_example_pipeline",
+  "description": "Pipeline que genera texto y lo formatea",
+  "schedule": "0 9 * * *",
+  "nodes": [
+    {
+      "id": "text_generator",
+      "type": "text_generator",
+      "name": "Generate Motivational Text",
+      "credentials": "default",
+      "config": {
+        "chain_type": "llm",
+        "prompt_template": "Genera un mensaje motivacional corto sobre {topic}",
+        "model": "gpt-3.5-turbo",
+        "temperature": 0.8
+      }
+    },
+    {
+      "id": "text_formatter",
+      "type": "text_formatter",
+      "name": "Format Text to Uppercase",
+      "config": {
+        "format_type": "uppercase"
+      }
+    },
+    {
+      "id": "telegram_publisher",
+      "type": "telegram_publisher",
+      "name": "Publish to Telegram",
+      "credentials": "motivational_bot",
+      "config": {
+        "message_template": "💪 <b>Daily Motivational Message</b>\n\n{generated_text}\n\n<i>✨ Have an amazing day!</i>"
+      }
+    }
+  ]
+} 

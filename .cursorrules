@@ -1,0 +1,91 @@
+# Automation Chain Rules
+
+## Core Principles
+- Simplicity first: Choose the simpler solution
+- Preserve the magic line: `input = { ...input, ...output };`
+- Direct service instantiation over dependency injection
+- Self-documenting code over comments
+
+## File Naming
+- Services: `{ServiceName}Service.ts` (OpenAIService, TelegramService)
+- Nodes: `{NodeType}{Category}.ts` (TextGenerator, TelegramPublisher)
+- Core: `{ComponentName}.ts` (Pipeline, Builder, Node interface)
+
+## Code Patterns
+
+### Node Implementation
+```typescript
+export class ExampleNode implements Node {
+  private service: SomeService;
+  private config: NodeDefinition;
+
+  constructor(config: NodeDefinition) {
+    this.config = config;
+    this.service = new SomeService();
+    if (config.config.service) {
+      this.service.loadConfig(config.config.service);
+    }
+  }
+
+  name(): string { return this.config.name; }
+
+  async validate(): Promise<void> {
+    if (!this.service.isReady()) throw new Error('Service not initialized');
+  }
+
+  async execute(input: Record<string, any>): Promise<Record<string, any>> {
+    return { result: 'processed_data' };
+  }
+}
+```
+
+### Service Implementation
+```typescript
+export class ExampleService {
+  private client!: SomeClient;
+  private config: ServiceConfig = { /* defaults */ };
+
+  loadConfig(config: Record<string, any>): void {
+    this.config = { ...this.config, ...config };
+    this.client = new SomeClient(this.config);
+  }
+
+  isReady(): boolean { return !!this.client; }
+
+  async performAction(data: any): Promise<any> {
+    if (!this.isReady()) throw new Error('Service not initialized');
+    return this.client.action(data);
+  }
+}
+```
+
+## Verbosity Rules
+- Write minimum code to express intent
+- Remove unnecessary getters: `getName()`, `getCount()`
+- Use concise error messages: `"Failed to load config"` not `"Failed to load pipeline configuration from file"`
+- Essential logs only: Start, progress, completion, errors
+- Self-documenting code over comments
+
+## What NOT to Do
+- ❌ Middleware system: `pipeline.use(loggingMiddleware)`
+- ❌ Plugin system: `pluginManager.register()`
+- ❌ Context objects: `async execute(input, ctx)`
+- ❌ Runnables: `RunnableSequence.from()`
+- ❌ Generic names: `LangChainService`, `AIService`
+
+## Logging
+- 🚀 Pipeline start
+- 📋 Node execution  
+- ✅ Success
+- ❌ Errors
+- 🤖 AI operations
+- 📤 Publishing
+
+## Package Management
+- Use Yarn: `yarn add <package>`
+
+## Key Decisions
+- No middleware, no plugins, no context objects
+- Direct service instantiation
+- English documentation
+- Clear naming conventions 

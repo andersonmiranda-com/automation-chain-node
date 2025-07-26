@@ -1,0 +1,30 @@
+{
+  "name": "agent_chain_pipeline",
+  "description": "Generates content using LangChain agents with tools",
+  "schedule": "0 15 * * *",
+  "nodes": [
+    {
+      "id": "agent_generator",
+      "type": "text_generator",
+      "name": "Generate Content with Agent",
+      "credentials": "default",
+      "config": {
+        "chain_type": "agent",
+        "tools": ["web_search", "calculator"],
+        "prompt_template": "Research {topic} and create an informative post with current information and insights.",
+        "model": "gpt-3.5-turbo",
+        "max_tokens": 400,
+        "temperature": 0.6
+      }
+    },
+    {
+      "id": "telegram_publisher",
+      "type": "telegram_publisher",
+      "name": "Publish to Telegram",
+      "credentials": "agent_bot",
+      "config": {
+        "message_template": "🔍 *Research Update*\n\n{generated_text}\n\n📊 Based on latest data"
+      }
+    }
+  ]
+} 
