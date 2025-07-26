@@ -16,11 +16,26 @@ The application uses a **modular node-based architecture** similar to n8n, allow
 
 ### 1. Clone and Setup
 
+#### **Option A: Using Yarn (Recommended)**
 ```bash
 git clone <repository-url>
 cd automation-chain
 yarn install
 ```
+
+#### **Option B: Using Bun (Lightweight Alternative)**
+```bash
+git clone <repository-url>
+cd automation-chain
+
+# Install Bun if you don't have it
+curl -fsSL https://bun.sh/install | bash
+
+# Install dependencies
+bun install
+```
+
+> 📖 **For detailed Bun instructions, see [Bun Development Guide](docs/BUN_GUIDE.md)**
 
 ### 2. Configure Credentials
 
@@ -50,6 +65,7 @@ Then edit `config/credentials.json` with your actual API keys:
 
 ### 3. Run the Application
 
+#### **Using Yarn**
 ```bash
 # Run with default pipeline (telegram_pipeline)
 yarn dev
@@ -59,6 +75,8 @@ yarn dev telegram_pipeline
 yarn dev conversational_chain
 yarn dev agent_chain
 ```
+
+
 
 ## 🤖 LangChain Integration
 
@@ -302,17 +320,16 @@ case 'text_formatter':
 
 ## 🧪 Testing
 
-Run the test suite:
-
+### **Using Yarn**
 ```bash
+# Run the test suite
 yarn test
-```
 
-Run specific tests:
-
-```bash
+# Run specific tests
 yarn test --testPathPattern=pipeline
 ```
+
+
 
 ## 🛣️ Development Roadmap
 

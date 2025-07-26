@@ -21,11 +21,11 @@ async function main(): Promise<void> {
     if (nodeId) {
       const node = pipeline.getNodeById(nodeId);
       if (!node) {
-        throw new Error(`Nodo con id '${nodeId}' no encontrado en el pipeline`);
+        throw new Error(`Node with id '${nodeId}' not found in the pipeline`);
       }
       await node.validate();
       const result = await node.execute({});
-      console.log(`✅ Nodo '${nodeId}' ejecutado. Resultado:`, result);
+      console.log(`✅ Node '${nodeId}' executed. Result:`, result);
     } else {
       const result = await pipeline.execute();
       console.log("✅ Pipeline completed", result);
